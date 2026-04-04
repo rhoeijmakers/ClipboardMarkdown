@@ -26,7 +26,7 @@ enum ClipboardManager {
 
         do {
             try text.write(to: fileURL, atomically: true, encoding: .utf8)
-            notify(title: "Opgeslagen", body: fileURL.lastPathComponent)
+            notify(title: "Opgeslagen", body: fileURL.lastPathComponent, filePath: fileURL.path)
         } catch {
             notify(title: "Fout bij opslaan", body: error.localizedDescription)
         }
@@ -51,7 +51,7 @@ enum ClipboardManager {
         }
     }
 
-    private static func notify(title: String, body: String) {
+    private static func notify(title: String, body: String, filePath: String? = nil) {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
             guard granted else { return }
@@ -59,6 +59,7 @@ enum ClipboardManager {
             content.title = title
             content.body = body
             content.sound = .default
+            if let filePath { content.userInfo = ["filePath": filePath] }
             center.add(UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil))
         }
     }
