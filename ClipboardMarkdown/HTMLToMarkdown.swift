@@ -38,9 +38,11 @@ enum HTMLToMarkdown {
         s = s.replacingOccurrences(of: "</li>", with: "")
         s = replaceAll(s, pattern: "</?[uo]l[^>]*>", with: "\n")
 
-        // 8. Paragraphs and breaks
-        s = replaceAll(s, pattern: "<p[^>]*>", with: "\n")
-        s = s.replacingOccurrences(of: "</p>", with: "\n")
+        // 8. Block-level elements → paragraph breaks
+        //    Covers <p>, <div>, <section>, <article> and their closing tags
+        s = replaceAll(s, pattern: #"</?(?:div|section|article|header|footer|main|aside)[^>]*>"#, with: "\n\n")
+        s = replaceAll(s, pattern: "<p[^>]*>", with: "\n\n")
+        s = s.replacingOccurrences(of: "</p>", with: "\n\n")
         s = replaceAll(s, pattern: "<br\\s*/?>", with: "\n")
 
         // 9. Horizontal rule
@@ -52,13 +54,12 @@ enum HTMLToMarkdown {
         // 11. HTML entities
         s = decodeEntities(s)
 
-        // 12. Remove backslash-escapes that platforms like LinkedIn embed in their HTML
-        //     e.g. \* \** \*\* → strip the backslashes
-        s = replaceAll(s, pattern: #"\\([*_`#\[\]()\\])"#, with: "$1")
+        // 12. Remove LinkedIn-style internal Markdown escape artifacts (\* \** \*\*)
+        //     These are literal characters in the HTML, not actual formatting
+        s = replaceAll(s, pattern: #"\\[*_]"#, with: "")
 
-        // 13. Collapse empty bold/italic markers left over after cleanup: **** or ** **
-        s = replaceAll(s, pattern: #"\*{4,}"#, with: "")
-        s = replaceAll(s, pattern: #"\*\*\s*\*\*"#, with: "")
+        // 13. Collapse empty bold/italic markers left over after cleanup
+        s = replaceAll(s, pattern: #"\*{2,}"#, with: "")
 
         // 14. Collapse excessive blank lines
         s = replaceAll(s, pattern: "\n{3,}", with: "\n\n")
