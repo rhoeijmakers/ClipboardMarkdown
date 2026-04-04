@@ -34,6 +34,10 @@ enum HTMLToMarkdown {
         s = convertOrderedLists(s)
 
         // 7. Unordered list items
+        // Strip <p> tags directly inside <li> — Google Docs wraps every item in <p>,
+        // which would otherwise cause the text to land on a new line after "- ".
+        s = replaceAll(s, pattern: #"(<li[^>]*>)\s*<p[^>]*>"#, with: "$1")
+        s = replaceAll(s, pattern: #"</p>\s*</li>"#, with: "</li>")
         s = replaceAll(s, pattern: "<li[^>]*>", with: "\n- ")
         s = s.replacingOccurrences(of: "</li>", with: "")
         s = replaceAll(s, pattern: "</?[uo]l[^>]*>", with: "\n")
