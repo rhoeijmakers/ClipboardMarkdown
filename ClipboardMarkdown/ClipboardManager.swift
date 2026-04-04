@@ -12,6 +12,8 @@ enum ClipboardManager {
 
         if let html, !html.isEmpty, htmlHasStructure(html) {
             text = HTMLToMarkdown.convert(html)
+        } else if let rtf = RTFToMarkdown.convert(from: pasteboard), !rtf.isEmpty {
+            text = rtf
         } else if let plain, !plain.isEmpty {
             text = plain
         } else {
