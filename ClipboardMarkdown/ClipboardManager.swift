@@ -7,9 +7,12 @@ enum ClipboardManager {
         let pasteboard = NSPasteboard.general
         let text: String
 
-        if let html = pasteboard.string(forType: .init("public.html")), !html.isEmpty {
+        let plain = pasteboard.string(forType: .string)
+        let html = pasteboard.string(forType: .init("public.html"))
+
+        if let html, !html.isEmpty, htmlHasStructure(html) {
             text = HTMLToMarkdown.convert(html)
-        } else if let plain = pasteboard.string(forType: .string), !plain.isEmpty {
+        } else if let plain, !plain.isEmpty {
             text = plain
         } else {
             notify(title: "Clipboard is leeg", body: "Geen tekst gevonden op het klembord.")
@@ -29,6 +32,24 @@ enum ClipboardManager {
             notify(title: "Opgeslagen", body: fileURL.lastPathComponent, filePath: fileURL.path)
         } catch {
             notify(title: "Fout bij opslaan", body: error.localizedDescription)
+        }
+    }
+
+    /// Returns true only if the HTML contains meaningful structure worth converting:
+    /// headings, code blocks, lists, or links. Plain prose wrapped in <div> or <p>
+    /// is better served by the plain text version from the clipboard.
+    private static func htmlHasStructure(_ html: String) -> Bool {
+        let patterns = [
+            "<h[1-6][^>]*>",           // headings
+            "<pre[^>]*>",              // code blocks
+            "<code[^>]*>",             // inline code
+            "<[uo]l[^>]*>",            // lists
+            "<a\\s[^>]*href=",         // links
+        ]
+        let lower = html.lowercased()
+        return patterns.contains { pattern in
+            (try? NSRegularExpression(pattern: pattern, options: .caseInsensitive))?
+                .firstMatch(in: lower, range: NSRange(lower.startIndex..., in: lower)) != nil
         }
     }
 
