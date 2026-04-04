@@ -52,7 +52,15 @@ enum HTMLToMarkdown {
         // 11. HTML entities
         s = decodeEntities(s)
 
-        // 12. Collapse excessive blank lines
+        // 12. Remove backslash-escapes that platforms like LinkedIn embed in their HTML
+        //     e.g. \* \** \*\* → strip the backslashes
+        s = replaceAll(s, pattern: #"\\([*_`#\[\]()\\])"#, with: "$1")
+
+        // 13. Collapse empty bold/italic markers left over after cleanup: **** or ** **
+        s = replaceAll(s, pattern: #"\*{4,}"#, with: "")
+        s = replaceAll(s, pattern: #"\*\*\s*\*\*"#, with: "")
+
+        // 14. Collapse excessive blank lines
         s = replaceAll(s, pattern: "\n{3,}", with: "\n\n")
 
         return s.trimmingCharacters(in: .whitespacesAndNewlines)
