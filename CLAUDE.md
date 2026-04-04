@@ -30,4 +30,19 @@ cp -R /tmp/ClipboardMarkdown_build/ClipboardMarkdown.app /Applications/Clipboard
 - Bestandsnaam: `yyyy-MM-dd HH.mm.ss.md`
 - Bij naamconflict: suffix `(2)`, `(3)`, etc.
 - Bevestiging via `UNUserNotificationCenter` (vraagt eenmalig toestemming)
+- Klikken op notificatie opent het bestand in de standaard-app
 - Foutmeldingen (leeg clipboard, Downloads niet bereikbaar) via dezelfde notificaties
+
+## Clipboard-prioriteit
+
+1. **HTML met structuur** (headings, code, lijsten, links) → `HTMLToMarkdown`
+2. **RTF** (Pages, Word, etc.) → `RTFToMarkdown`
+3. **Plain text** → direct opslaan
+
+Bronnen zonder structuur (LinkedIn, plain prose in divs) vallen automatisch terug op plain text.
+
+## Bekende eigenaardigheden per bron
+
+- **Google Docs**: wikkelt `<li>` in `<p>` → gefixed door `<p>` inside `<li>` te strippen
+- **Pages RTF**: bullet-marker en tekst zijn aparte paragrafen → gefixed met post-processing regex
+- **LinkedIn**: gebruikt `\*` als interne opmaakmarkers en `<div>` voor alinea's → valt terug op plain text (geen HTML-structuur)
