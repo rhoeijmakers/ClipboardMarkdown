@@ -17,12 +17,12 @@ enum ClipboardManager {
         } else if let plain, !plain.isEmpty {
             text = plain
         } else {
-            notify(title: "Clipboard is leeg", body: "Geen tekst gevonden op het klembord.")
+            notify(title: "Clipboard is empty", body: "No text found on the clipboard.")
             return
         }
 
         guard let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
-            notify(title: "Fout", body: "Downloads-map is niet bereikbaar.")
+            notify(title: "Error", body: "Downloads folder is not accessible.")
             return
         }
 
@@ -31,9 +31,9 @@ enum ClipboardManager {
 
         do {
             try text.write(to: fileURL, atomically: true, encoding: .utf8)
-            notify(title: "Opgeslagen", body: fileURL.lastPathComponent, filePath: fileURL.path)
+            notify(title: "Saved", body: fileURL.lastPathComponent, filePath: fileURL.path)
         } catch {
-            notify(title: "Fout bij opslaan", body: error.localizedDescription)
+            notify(title: "Save failed", body: error.localizedDescription)
         }
     }
 
