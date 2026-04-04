@@ -48,8 +48,19 @@ enum RTFToMarkdown {
             }
         }
 
-        // Collapse excessive blank lines
         var cleaned = result
+
+        // Pages RTF emits the bullet marker and its content as two separate
+        // paragraphs. This collapses "- \n\n<content>" → "- <content>".
+        if let regex = try? NSRegularExpression(pattern: #"(?m)^([ \t]*)- $\n\n?"#) {
+            cleaned = regex.stringByReplacingMatches(
+                in: cleaned,
+                range: NSRange(cleaned.startIndex..., in: cleaned),
+                withTemplate: "$1- "
+            )
+        }
+
+        // Collapse excessive blank lines
         while cleaned.contains("\n\n\n") {
             cleaned = cleaned.replacingOccurrences(of: "\n\n\n", with: "\n\n")
         }
