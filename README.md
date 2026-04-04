@@ -51,6 +51,8 @@ The app picks the best available format from the clipboard in this order:
 
 Content without meaningful structure (e.g. LinkedIn posts, plain prose in `<div>` tags) automatically falls back to plain text.
 
+PDF is not supported — it's a rendering format, not a copy format. The clipboard never carries the document, only whatever text the PDF viewer chose to expose.
+
 ## Code signing
 
 No Apple Developer account is required for local use. Xcode uses automatic signing by default. If macOS blocks the app when launching outside Xcode, run:
