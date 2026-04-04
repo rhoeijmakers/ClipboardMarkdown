@@ -4,7 +4,14 @@ import UserNotifications
 enum ClipboardManager {
 
     static func saveClipboardAsMarkdown() {
-        guard let text = NSPasteboard.general.string(forType: .string), !text.isEmpty else {
+        let pasteboard = NSPasteboard.general
+        let text: String
+
+        if let html = pasteboard.string(forType: .init("public.html")), !html.isEmpty {
+            text = HTMLToMarkdown.convert(html)
+        } else if let plain = pasteboard.string(forType: .string), !plain.isEmpty {
+            text = plain
+        } else {
             notify(title: "Clipboard is leeg", body: "Geen tekst gevonden op het klembord.")
             return
         }

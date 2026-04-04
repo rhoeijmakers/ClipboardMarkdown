@@ -10,6 +10,7 @@
 		1A2B3C4D0000000000000013 /* ClipboardMarkdownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D0000000000000007 /* ClipboardMarkdownApp.swift */; };
 		1A2B3C4D0000000000000014 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D0000000000000008 /* ContentView.swift */; };
 		1A2B3C4D0000000000000015 /* ClipboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D0000000000000009 /* ClipboardManager.swift */; };
+		1A2B3C4D0000000000000024 /* HTMLToMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D0000000000000025 /* HTMLToMarkdown.swift */; };
 		1A2B3C4D0000000000000023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D0000000000000022 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -18,6 +19,7 @@
 		1A2B3C4D0000000000000007 /* ClipboardMarkdownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMarkdownApp.swift; sourceTree = "<group>"; };
 		1A2B3C4D0000000000000008 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1A2B3C4D0000000000000009 /* ClipboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardManager.swift; sourceTree = "<group>"; };
+		1A2B3C4D0000000000000025 /* HTMLToMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLToMarkdown.swift; sourceTree = "<group>"; };
 		1A2B3C4D0000000000000022 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,6 +56,7 @@
 				1A2B3C4D0000000000000007 /* ClipboardMarkdownApp.swift */,
 				1A2B3C4D0000000000000008 /* ContentView.swift */,
 				1A2B3C4D0000000000000009 /* ClipboardManager.swift */,
+				1A2B3C4D0000000000000025 /* HTMLToMarkdown.swift */,
 				1A2B3C4D0000000000000022 /* Assets.xcassets */,
 			);
 			path = ClipboardMarkdown;
@@ -131,6 +134,7 @@
 				1A2B3C4D0000000000000013 /* ClipboardMarkdownApp.swift in Sources */,
 				1A2B3C4D0000000000000014 /* ContentView.swift in Sources */,
 				1A2B3C4D0000000000000015 /* ClipboardManager.swift in Sources */,
+				1A2B3C4D0000000000000024 /* HTMLToMarkdown.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
