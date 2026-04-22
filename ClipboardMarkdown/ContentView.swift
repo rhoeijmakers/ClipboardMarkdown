@@ -35,7 +35,7 @@ struct ContentView: View {
         NSApplication.shared.orderFrontStandardAboutPanel(options: [
             .credits: credits,
             .applicationName: "ClipboardMarkdown",
-            .applicationVersion: "1.0",
+            .applicationVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "",
             .version: ""
         ])
         NSApplication.shared.activate(ignoringOtherApps: true)

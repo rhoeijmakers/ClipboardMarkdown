@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.1] — 2026-04-22
+
+### Fixed
+- Version number in About window now reads from the bundle instead of being hardcoded.
+
 ## [1.1] — 2026-04-22
 
 ### Fixed
